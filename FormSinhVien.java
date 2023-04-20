@@ -104,7 +104,30 @@ public class FormSinhVien extends javax.swing.JFrame {
         }
         this.qlsv.Delete(index);
     }
-    
+    public boolean check(String ten, String tuoi) {
+
+        StringBuilder sb = new StringBuilder();
+        if (!ten.matches("^[a-zA-Z ]+$")) {
+            sb.append("Please enter name by words\n");
+            
+        }
+        if (ten.isBlank()) {
+            sb.append("Name field can not be empty blank\n");
+        }
+        try {
+            int age = Integer.parseInt(tuoi);
+
+        } catch (Exception e) {
+            sb.append("Please enter age by numbers\n");
+            
+        }
+
+        if (sb.length() > 0) {
+            JOptionPane.showMessageDialog(this, sb.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
     
 
     /**
@@ -342,24 +365,22 @@ public class FormSinhVien extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        StringBuilder sb = new StringBuilder();
+       StringBuilder sb = new StringBuilder();
         if (txtTen.getText().equals("")) {
-            sb.append("Student name can not be empty blank\n");
-            txtTen.setBackground(Color.red);
+            sb.append("Fill all the information");
+            //txtTen.setBackground(Color.red);
         } else {
-            txtTen.setBackground(Color.white);
-        }
-        if (txtTuoi.getText().equals("")) {
-            sb.append("Student age can not be empty blank\n");
-            txtTuoi.setBackground(Color.red);
-        } else {
-            txtTuoi.setBackground(Color.white);
+            //txtTen.setBackground(Color.white);
         }
 
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (!check(this.txtTen.getText(), this.txtTuoi.getText())) {
+            return;
+        }
+
         this.add();
         this.hienthi();
         this.resetInputs();
@@ -407,9 +428,9 @@ public class FormSinhVien extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        StringBuilder sb = new StringBuilder();
+       StringBuilder sb = new StringBuilder();
         if (txtTen.getText().equals("")) {
-            sb.append("Please choose the student you want to update");
+            sb.append("Please choose the student you want to remove");
             //txtTen.setBackground(Color.red);
         } else {
             //txtTen.setBackground(Color.white);
@@ -417,6 +438,9 @@ public class FormSinhVien extends javax.swing.JFrame {
 
         if (sb.length() > 0) {
             JOptionPane.showMessageDialog(this, sb.toString(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (!check(this.txtTen.getText(), this.txtTuoi.getText())) {
             return;
         }
         this.Update();
